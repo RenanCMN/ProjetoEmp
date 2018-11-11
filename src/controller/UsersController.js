@@ -19,5 +19,23 @@ module.exports={
         await Users.findByIdAndRemove(req.params.id)
 
         return res.send();
+    },
+
+    async login(req,res) {
+            await Users.findOne({Email:req.body.Email,Senha:req.body.Senha},(err,users)=>{
+                if(err){
+                    console.log(err);
+                    return res.status(500).send();
+                }
+                if(!users){
+                    return res.status(404).send('Nome ou Senha');
+                }
+
+                return res.status(200).send('Logado');
+            })
+      
     }
+
+
 }
+

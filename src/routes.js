@@ -2,8 +2,6 @@ const express = require('express');
 const routes = express.Router();
 const UsersController= require('./controller/UsersController')
 const CompanyController= require('./controller/CompanyController')
-const LoginController=require('./controller/LoginController')
-
 
 //Get Para teste :
 routes.get("/usuario",UsersController.listUser);
@@ -19,5 +17,5 @@ routes.delete("/usuario/:id",UsersController.destroy);
 routes.delete("/empresa/:id",CompanyController.destroy);
 
 //Login 
-routes.post("/login",LoginController.Login);
+routes.post("/login",UsersController.login);
 module.exports = routes;

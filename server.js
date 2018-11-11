@@ -14,4 +14,4 @@ requireDir('./src/models');
 
 
 app.use('/',require('./src/routes'));
-app.listen(3001);
+app.listen(3000);
