@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
 const Users = mongoose.model('Users');
-const Status = require('../status/status')
-
+var validator = require('validator');
 
 module.exports={
     async addUser(req,res){
         try{
             const users = await Users.create(req.body);
-            //res.json(users);
             return res.status(200).send({
                 message:'Usuario Criado Com sucesso'
             })
@@ -22,7 +20,6 @@ module.exports={
     async listUser(req,res){
         try{
             const users = await Users.find();
-            // return res.json(users);
             return res.status(200).send({message:'Success in list Users',data:users})
         }catch(e){
             res.status(500).send({
@@ -35,7 +32,6 @@ module.exports={
     async updateuser(req,res){
         try{
             const  users = await Users.findByIdAndUpdate(req.params.id,req.body,{new:true})
-            // return  res.json(users);
             return res.status(200).send({message:'Sucess'})
         }catch(e){
             return res.status(500).send({message:'Erro Na Requisicao Update'})

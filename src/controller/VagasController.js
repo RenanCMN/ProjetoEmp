@@ -6,8 +6,7 @@ module.exports={
     async addVagas(req,res){
         try{
             const vagas = await Vagas.create(req.body);
-            // return res.json(vagas);
-            res.status(200).send({message:'vaga criada com sucesso  '})
+            res.status(200).send({message:'vaga criada com sucesso',data:vagas})
         }catch(e){
             res.status(500).send({message:'erro ao cadastra vaga'})
         }
@@ -15,7 +14,6 @@ module.exports={
     async listVagas(req,res){
         try{     
             const vagas = await Vagas.find();
-            // return res.json(vagas);
             return res.status(200).send({message:'Listado vagas com sucesso', data:vagas})
         }catch(e){
             return res.status(500).send({message:'Erro ao Listar Vagas'})
@@ -24,7 +22,6 @@ module.exports={
     async updateVagas(req,res){
         try{
             const  vagas = await Vagas.findByIdAndUpdate(req.params.id,req.body,{new:true})
-            // return  res.json(vagas);
             return res.send(200).send({message:'Alterado Com sucesso'})
         }catch(e){
             return res.status(500).send({message:'Erro Ao Alterar Vaga'})
