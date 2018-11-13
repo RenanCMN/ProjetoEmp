@@ -1,5 +1,6 @@
 #node_module
 node_modules
 
-
+status
+status/status.js
 config.js
