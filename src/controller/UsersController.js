@@ -3,16 +3,35 @@ mongoose.set('useFindAndModify', false);
 const Users = mongoose.model('Users');
 var validator = require('validator');
 
+
 module.exports={
     async addUser(req,res){
+
         try{
+
+            // var check = validator.isEmail(req.body.Email);
+            // var checkInNome = validator.isByteLength(
+            //                   req.body.Nome,{
+            //                     min:2,
+            //                     max:100})
+            // var checkInSenha = validator
+            //                   .isByteLength(req.body.Senha,{
+            //                         min:8,
+            //                         max:100
+            //                   })
+
+            // if(!check) throw 'email Invalido';
+            // if(!checkInNome) throw 'Nome Invalido';
+            // if(!checkInSenha) throw 'Senha Invalida minimo 8 caracter';
+
             const users = await Users.create(req.body);
             return res.status(200).send({
                 message:'Usuario Criado Com sucesso'
             })
         }catch(e){
+           console.log(e);
            return res.status(500).send({
-                message: 'Falha Ao Adicionar'
+                message: e
             });
         }
         
@@ -30,7 +49,23 @@ module.exports={
 
     },
     async updateuser(req,res){
+
         try{
+            var check = validator.isEmail(req.body.Email);
+            var checkInNome = validator.isByteLength(
+                              req.body.Nome,{
+                                min:2,
+                                max:100})
+            var checkInSenha = validator
+                              .isByteLength(req.body.Nome,{
+                                    min:8,
+                                    max:100
+                              })
+
+            if(!check) throw 'email Invalido';
+            if(!checkInNome) throw 'Nome Invalido';
+            if(!checkInSenha) throw 'Senha Invalida minimo 8 caracter';
+            
             const  users = await Users.findByIdAndUpdate(req.params.id,req.body,{new:true})
             return res.status(200).send({message:'Sucess'})
         }catch(e){
@@ -48,19 +83,6 @@ module.exports={
             res.status(500).send({message:'Erro Ao deletar'})
         }
             
-    },
-    async login(req,res) {
-        if(!users){
-            return res.status(404).send({message:'Nome ou Senha'});
-        }
-        try{
-            await Users.findOne({Email:req.body.Email,Senha:req.body.Senha})
-            return res.status(200).send({message:'Logado'});
-        }catch(e){
-            console.log(err);
-            return res.status(500).send();
-        }
-
-    }   
+    } 
 }
 
